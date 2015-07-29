@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import patterns, url, include
+
 from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = [
     url(r'^rango/', include('rango.urls')),
+    url(r'^admin/', include(admin.site.urls)),
 ]
 
 if settings.DEBUG:
