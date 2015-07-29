@@ -7,8 +7,7 @@ def populate():
         title="Official Python Tutorial",
         url="http://docs.python.org/2/tutorial/")
 
-    add_page(cat=python_cat,
-        title="How to Think like a Computer Scientist",
+    add_page(cat=python_cat, title="How to Think like a Computer Scientist",
         url="http://www.greenteapress.com/thinkpython/")
 
     add_page(cat=python_cat,
@@ -56,5 +55,7 @@ def add_cat(name):
 if __name__ == '__main__':
     print "Starting Rango population script..."
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'twd_project.settings')
-    #from rango.models import Category, Page
+    import django
+    django.setup()
+    from rango.models import Category, Page
     populate()
