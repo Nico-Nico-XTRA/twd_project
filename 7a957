@@ -1,0 +1,35 @@
+[33mcommit 7a9572581f49016e12207e871ccf4c624dba4d3b[m
+Author: Nico-Nico <nystroemer@yahoo.dk>
+Date:   Wed Jul 29 22:50:46 2015 +0200
+
+    A lot of changes: populated models with populate_rango.py, changes made to Category - about to finish TWD-chapter 5
+
+[33mcommit 85e859f15a35f817a257be1190d7743c1b7e62d8[m
+Author: Nico-Nico <nystroemer@yahoo.dk>
+Date:   Wed Jul 29 12:16:38 2015 +0200
+
+    trying to populate Category and Page models
+
+[33mcommit d22ded2f24f53d0ee321b5a4129161bdf004d33f[m
+Author: Nico-Nico <nystroemer@yahoo.dk>
+Date:   Wed Jul 29 09:11:35 2015 +0200
+
+    rango.db synced
+
+[33mcommit d3f1e81c3b38f70e6bf20d6a96fea59a22ea04ef[m
+Author: Nico-Nico <nystroemer@yahoo.dk>
+Date:   Wed Jul 29 01:17:34 2015 +0200
+
+    created rango.db
+
+[33mcommit 273057cb9a74eb0a8e8aeb8770df4b2b42262691[m
+Author: Nico-Nico <nystroemer@yahoo.dk>
+Date:   Sat Jul 25 13:18:27 2015 +0200
+
+    been around static media - everything's A-okay
+
+[33mcommit 99384a1b5facd39010defc514e69b39641a54e63[m
+Author: Nico-Nico <nystroemer@yahoo.dk>
+Date:   Tue Jul 21 11:37:00 2015 +0200
+
+    First, but very late commit
