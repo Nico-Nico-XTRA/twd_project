@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Rango</title>
 </head>
 <body>
-	{{ about_filler | safe }}
+	<h1>{{ category_name }}</h1>
+	{% if category %}
+		{% if pages %}
+			<ul>
+				{% for page in pages %}
+					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<strong>No pages currently in category.</strong>
+		{% endif %}
+	{% else %}
+		The specified category {{ category_name }} does not exist!
+	{% endif %}
+	<div>Back to <a href="/rango">frontpage</a>.</div>
 </body>
 </html>

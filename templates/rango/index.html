@@ -10,7 +10,7 @@
 		{% if categories %}
 			<ul>
 				{% for category in categories %}
-				<li>{{ category.name }}
+				<li><a href="category/{{ category.url }}">{{ category.name }}</a>
 					<ul>
 						{% for page in pages %}
 							{% if page.category == category %}
@@ -24,6 +24,13 @@
 		{% else %}
 			<strong>There are no categories present.</strong>
 		{% endif %}
+
+		<ol>
+			{% for cat in top5_cats %}
+				<li>{{ cat.name }} - views: {{ cat.views }}</li>
+			{% endfor %}
+		</ol>
+
 		<a href="/rango/about">About</a><br />
 		<img src="{% static "rango.jpg" %}" style="max-width:450px" alt="Picture of Rango" />
 	</body>
