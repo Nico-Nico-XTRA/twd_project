@@ -14,7 +14,7 @@
 					<ul>
 						{% for page in pages %}
 							{% if page.category == category %}
-								<li>{{ page.title }}</li>
+								<li>{{ page.title }} <strong>(views: {{ page.views }})</strong></li>
 							{% endif %}
 						{% endfor %}
 					</ul>

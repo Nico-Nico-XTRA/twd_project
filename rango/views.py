@@ -1,17 +1,8 @@
-from django.template import RequestContext
-from django.shortcuts import render, render_to_response
-from django.http import HttpResponse
+from django.shortcuts import render
 from rango.models import Category, Page
+from rango.forms import CategoryForm
 
-def index(request):
-	# Request the context of the request.
-    # The context contains information such as the client's machine details, for example.
-    context = RequestContext(request)
-
-    # Construct a dictionary to pass to the template engine as its context.
-    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-    top5_categories = Category.objects.order_by('-likes')[:5]
-
+def index(request):    
     category_list = Category.objects.all()
     page_list = Page.objects.all()
 
@@ -21,28 +12,20 @@ def index(request):
         for page in page_list:
             if category.name == page.category:
                 category.views += page.views
+    
+    top5_categories = Category.objects.order_by('-views')[:5]
 
-    context_dict = {'categories': category_list,
+    context = {'categories': category_list,
                     'pages': page_list,
                     'top5_cats': top5_categories}
 
-    # Return a rendered response to send to the client.
-    # We make use of the shortcut function to make our lives easier.
-    # Note that the first parameter is the template we wish to use.
-    return render_to_response('rango/index.html', context_dict, context)
-    
+    return render(request, 'rango/index.html', context)
 
 def about(request):
-	#return HttpResponse("Rango says: Here is the about page. <a href='/rango/'>Index</a>")
-	context = RequestContext(request)
-	context_dict = {'about_filler': "This is what it's all about. Back to <a href='/rango/'>Index</a>"}
-	return render_to_response('rango/about.html', context_dict, context)
+	context = {'about_filler': "This is what it's all about. Back to <a href='/rango/'>Index</a>"}
+	return render(request, 'rango/about.html', context)
 
 def category(request, category_name_url):
-    #return HttpResponse("Rango says: Here is the about page. <a href='/rango/'>Index</a>")
-     # Request our context from the request passed to us.
-    context = RequestContext(request)
-
     # Change underscores in the category name to spaces.
     # URLs don't handle spaces well, so we encode them as underscores.
     # We can then simply replace the underscores with spaces again to get the name.
@@ -50,7 +33,7 @@ def category(request, category_name_url):
 
     # Create a context dictionary which we can pass to the template rendering engine.
     # We start by containing the name of the category passed by the user.
-    context_dict = {'category_name': category_name}
+    context = {'category_name': category_name}
 
     try:
         # Can we find a category with the given name?
@@ -63,14 +46,18 @@ def category(request, category_name_url):
         pages = Page.objects.filter(category=category)
 
         # Adds our results list to the template context under name pages.
-        context_dict['pages'] = pages
+        context['pages'] = pages
         # We also add the category object from the database to the context dictionary.
         # We'll use this in the template to verify that the category exists.
-        context_dict['category'] = category
+        context['category'] = category
     except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
         # Don't do anything - the template displays the "no category" message for us.
         pass
 
     # Go render the response and return it to the client.
-    return render_to_response('rango/category.html', context_dict, context)
+    return render(request, 'rango/category.html', context)
+
+def add_category(request):
+    # Get the context from the request
+    context = RequestContext(request)
