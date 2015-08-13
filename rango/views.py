@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rango.models import Category, Page
-from rango.forms import CategoryForm
+from rango.forms import CategoryForm, PageForm
 
 def index(request):    
     category_list = Category.objects.all()
@@ -29,11 +29,9 @@ def category(request, category_name_url):
     # Change underscores in the category name to spaces.
     # URLs don't handle spaces well, so we encode them as underscores.
     # We can then simply replace the underscores with spaces again to get the name.
+    context = {'category_name_url': category_name_url}
     category_name = category_name_url.replace('_', ' ')
-
-    # Create a context dictionary which we can pass to the template rendering engine.
-    # We start by containing the name of the category passed by the user.
-    context = {'category_name': category_name}
+    context['category_name'] = category_name    
 
     try:
         # Can we find a category with the given name?
@@ -83,3 +81,41 @@ def add_category(request):
     # Bad form (or form details), no form supplied...
     # Render the form with error messages (if any).
     return render(request, 'rango/add_category.html', {'form': form})
+
+def decode_url(url):
+    cat_name = url.replace('_', ' ')
+    return cat_name
+
+def add_page(request, category_name_url):
+    category_name = decode_url(category_name_url)
+
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+
+        if form.is_valid():
+            # This time we cannot commit straight away.
+            # Not all fields are automatically populated!
+            page = form.save(commit=False)
+
+            # Retrieve the associated Category object so we can add it.
+            # Wrap the code in a try block - check if the category actually exists!
+            try:
+                cat = Category.objects.get(name=category_name)
+                page.category = cat
+            except Category.DoesNotExist:
+                # If we get here, the category does not exist.
+                # Go back and render the add category form as a way of saying the category 
+                return render(request, 'rango/add_category.html', {'test': test, 'foo': Category.objects.all()})
+
+            page.views = 0
+            page.save()
+
+            return category(request, category_name_url)
+        else:
+            print form.errors
+    else:
+        form = PageForm()
+    return render(request, 'rango/add_page.html',
+                    {'category_name_url': category_name_url,
+                    'category_name': category_name,
+                    'form': form})

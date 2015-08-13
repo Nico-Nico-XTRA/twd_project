@@ -25,12 +25,6 @@
 			<strong>There are no categories present.</strong>
 		{% endif %}
 
-		<ol>
-			{% for cat in top5_cats %}
-				<li>{{ cat.name }} - views: {{ cat.views }}</li>
-			{% endfor %}
-		</ol>
-
 		<a href="/rango/add_category">Add Category</a>
 		<a href="/rango/about">About</a><br />
 		<img src="{% static "rango.jpg" %}" style="max-width:450px" alt="Picture of Rango" />
